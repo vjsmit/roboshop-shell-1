@@ -1,0 +1,18 @@
+echo -e "\e[32mInstalling Nginx\e[0m"
+yum install nginx -y &>>/tmp/roboshop.log
+
+echo -e "\e[32mRemoving default content\e[0m"
+rm -rf /usr/share/nginx/html/*
+
+echo -e "\e[32mDownload the frontend content\e[0m"
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>/tmp/roboshop.log
+
+echo -e "\e[32mExtract the frontend content.\e[0m"
+cd /usr/share/nginx/html
+unzip /tmp/frontend.zip &>>/tmp/roboshop.log
+
+#Create Nginx Reverse Proxy Configuration.
+
+echo -e "\e[32mStart Nginx Server\e[0m"
+systemctl enable nginx &>>/tmp/roboshop.log
+systemctl restart nginx &>>/tmp/roboshop.log

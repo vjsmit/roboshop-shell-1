@@ -19,8 +19,7 @@ unzip /tmp/catalogue.zip &>>/tmp/roboshop.log
 echo -e "\e[33mDownload the dependencies\e[0m"
 npm install &>>/tmp/roboshop.log
 
-echo -e "\e[33m\e[0m"
-Setup SystemD Catalogue Service
+echo -e "\e[33mSetup SystemD Catalogue Service\e[0m"
 cp catalogue.service /etc/systemd/system/catalogue.service
 
 echo -e "\e[33mLoad the service\e[0m"

@@ -12,6 +12,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>/tmp/roboshop.log
 
 #Create Nginx Reverse Proxy Configuration.
+cp /home/centos/roboshop-shell-1/roboshop.conf /etc/nginx/default.d/roboshop.conf
 
 echo -e "\e[32mStart Nginx Server\e[0m"
 systemctl enable nginx &>>/tmp/roboshop.log

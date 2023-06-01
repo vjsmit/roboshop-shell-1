@@ -1,5 +1,4 @@
-
-echo -e "\e[33mSetup MongoDB repo\e[0m"
+echo -e "\e[33mSetup NodeJS repo\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
 
 echo -e "\e[33mInstall NodeJS\e[0m"
@@ -9,6 +8,7 @@ echo -e "\e[33mAdd application User\e[0m"
 useradd roboshop &>>/tmp/roboshop.log
 
 echo -e "\e[33mSetup an app directory\e[0m"
+rm -rf /app
 mkdir /app &>>/tmp/roboshop.log
 
 echo -e "\e[33mDownload the application code\e[0m"
@@ -36,4 +36,4 @@ echo -e "\e[33mInstall mongoDB client\e[0m"
 yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 
 echo -e "\e[33mLoad Schema\e[0m"
-mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js &>>/tmp/roboshop.log
+mongo --host mongodb-dev.smitdevops.online </app/schema/catalogue.js &>>/tmp/roboshop.log

@@ -5,7 +5,7 @@ echo -e "\e[33mInstall NodeJS\e[0m"
 yum install nodejs -y &>>/tmp/roboshop.log
 
 echo -e "\e[33mAdd application cart\e[0m"
-user add roboshop &>>/tmp/roboshop.log
+useradd roboshop &>>/tmp/roboshop.log
 
 echo -e "\e[33mSetup an app directory\e[0m"
 rm -rf /app

@@ -4,7 +4,7 @@ yum install maven -y &>>/tmp/roboshop.log
 echo -e "\e[33mAdd application User \e[0m"
 useradd roboshop &>>/tmp/roboshop.log
 
-echo -e "\e[33ms\Setup an app directory. \e[0m"
+echo -e "\e[33mSetup an app directory. \e[0m"
 rm -rf /app &>>/tmp/roboshop.log
 mkdir /app &>>/tmp/roboshop.log
 

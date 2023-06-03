@@ -36,5 +36,15 @@ func_nodejs() {
     func_print_head "Start the service"
     systemctl enable ${component} &>>${log_file}
     systemctl restart ${component} &>>${log_file}
+}
 
+schema_setup() {
+  func_print_head "Setup MongoDB repo"
+  cp /home/centos/roboshop-shell-1/mongo.repo /etc/yum.repos.d/mongo.repo
+
+  func_print_head "Install mongoDB client"
+  yum install mongodb-org-shell -y &>>/tmp/roboshop.log
+
+  func_print_head "Load Schema"
+  mongo --host mongodb-dev.smitdevops.online </app/schema/catalogue.js &>>/tmp/roboshop.log
 }

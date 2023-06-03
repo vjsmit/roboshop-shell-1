@@ -1,33 +1,6 @@
-echo -e "\e[33mSetup NodeJS repo\e[0m"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+source comman.sh
 
-echo -e "\e[33mInstall NodeJS\e[0m"
-yum install nodejs -y &>>/tmp/roboshop.log
 
-echo -e "\e[33mAdd application User\e[0m"
-useradd roboshop &>>/tmp/roboshop.log
-
-echo -e "\e[33mSetup an app directory\e[0m"
-rm -rf /app
-mkdir /app &>>/tmp/roboshop.log
-
-echo -e "\e[33mDownload the application code\e[0m"
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>/tmp/roboshop.log
-cd /app
-unzip /tmp/catalogue.zip &>>/tmp/roboshop.log
-
-echo -e "\e[33mDownload the dependencies\e[0m"
-npm install &>>/tmp/roboshop.log
-
-echo -e "\e[33mSetup SystemD Catalogue Service\e[0m"
-cp /home/centos/roboshop-shell-1/catalogue.service /etc/systemd/system/catalogue.service
-
-echo -e "\e[33mLoad the service\e[0m"
-systemctl daemon-reload &>>/tmp/roboshop.log
-
-echo -e "\e[33mStart the service\e[0m"
-systemctl enable catalogue &>>/tmp/roboshop.log
-systemctl restart catalogue &>>/tmp/roboshop.log
 
 echo -e "\e[33mSetup MongoDB repo\e[0m"
 cp /home/centos/roboshop-shell-1/mongo.repo /etc/yum.repos.d/mongo.repo

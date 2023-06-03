@@ -2,4 +2,4 @@ source common.sh
 component="user"
 
 func_nodejs
-schema_setup
+mongo_schema_setup

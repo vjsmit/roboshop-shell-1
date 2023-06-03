@@ -1,4 +1,4 @@
 source common.sh
 component="catalogue"
 func_nodejs
-schema_setup
+mongo_schema_setup

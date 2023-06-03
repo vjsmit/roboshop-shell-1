@@ -1,19 +1,21 @@
-echo -e "\e[32mInstalling Nginx\e[0m"
+source common.sh
+
+func_print_head "Installing Nginx"
 yum install nginx -y &>>/tmp/roboshop.log
 
-echo -e "\e[32mRemoving default content\e[0m"
+func_print_head "Removing default content"
 rm -rf /usr/share/nginx/html/*
 
-echo -e "\e[32mDownload the frontend content\e[0m"
+func_print_head "Download the frontend content"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>/tmp/roboshop.log
 
-echo -e "\e[32mExtract the frontend content.\e[0m"
+func_print_head "Extract the frontend content."
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>/tmp/roboshop.log
 
 #Create Nginx Reverse Proxy Configuration.
 cp /home/centos/roboshop-shell-1/roboshop.conf /etc/nginx/default.d/roboshop.conf
 
-echo -e "\e[32mStart Nginx Server\e[0m"
+func_print_head "Start Nginx Server"
 systemctl enable nginx &>>/tmp/roboshop.log
 systemctl restart nginx &>>/tmp/roboshop.log

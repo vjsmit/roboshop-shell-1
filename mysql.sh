@@ -1,17 +1,20 @@
-echo -e "\e[33mdisable MySQL 8\e[0m"
+source common.sh
+
+
+func_print_head "Disable MySQL 8"
 yum module disable mysql -y &>>/tmp/roboshop.log
 
-echo -e "\e[33mSetup the MySQL5.7 repo file\e[0m"
+func_print_head "Setup the MySQL5.7 repo file"
 cp /home/centos/roboshop-shell-1/mysql.repo /etc/yum.repos.d/mysql.repo &>>/tmp/roboshop.log
 
-echo -e "\e[33mInstall MySQL Server\e[0m"
+func_print_head "Install MySQL Server"
 yum install mysql-community-server -y &>>/tmp/roboshop.log
 
 
-echo -e "\e[33mStart MySQL Service\e[0m"
+func_print_head "Start MySQL Service"
 systemctl enable mysqld &>>/tmp/roboshop.log
 systemctl restart mysqld &>>/tmp/roboshop.log
 
-echo -e "\e[33mChange the default root password \e[0m"
+func_print_head "Change the default root password "
 mysql_secure_installation --set-root-pass RoboShop@1 &>>/tmp/roboshop.log
 

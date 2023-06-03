@@ -5,7 +5,6 @@ func_print_Head() {
   echo -e "\e[33m$1\e[0m"
 }
 
-
 func_nodejs() {
     func_print_head "Setup NodeJS repo"
     curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}

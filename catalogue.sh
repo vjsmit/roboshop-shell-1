@@ -1,6 +1,6 @@
-source comman.sh
+source common.sh
 
-
+func_nodejs
 
 echo -e "\e[33mSetup MongoDB repo\e[0m"
 cp /home/centos/roboshop-shell-1/mongo.repo /etc/yum.repos.d/mongo.repo

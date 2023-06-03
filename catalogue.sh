@@ -1,5 +1,5 @@
 source common.sh
-
+component="catalogue"
 func_nodejs
 
 echo -e "\e[33mSetup MongoDB repo\e[0m"

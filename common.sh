@@ -1,7 +1,7 @@
 
 log_file="/tmp/roboshop.log"
 
-func_print_Head() {
+func_print_head() {
   echo -e "\e[33m$1\e[0m"
 }
 
@@ -20,21 +20,21 @@ func_nodejs() {
     mkdir /app &>>${log_file}
 
     func_print_head "Download the application code"
-    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${log_file}
+    curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
     cd /app
-    unzip /tmp/catalogue.zip &>>${log_file}
+    unzip /tmp/${component}.zip &>>${log_file}
 
     func_print_head "Download the dependencies"
     npm install &>>${log_file}
 
     func_print_head "Setup SystemD Catalogue Service"
-    cp /home/centos/roboshop-shell-1/catalogue.service /etc/systemd/system/catalogue.service
+    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service
 
     func_print_head "Load the service"
     systemctl daemon-reload &>>${log_file}
 
     func_print_head "Start the service"
-    systemctl enable catalogue &>>${log_file}
-    systemctl restart catalogue &>>${log_file}
+    systemctl enable ${component} &>>${log_file}
+    systemctl restart ${component} &>>${log_file}
 
 }

@@ -1,3 +1,5 @@
+source common.sh
+
 func_print_head "Configure YUM Repos for erlang"
 curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>/tmp/roboshop.log
 

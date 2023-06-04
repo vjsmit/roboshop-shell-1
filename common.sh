@@ -96,3 +96,20 @@ python() {
     
     service_start
 }
+
+golang() {
+  echo -e "\e[33mInstall GoLang \e[0m"
+  yum install golang -y &>>${log_file}
+  
+  app_prereq
+  
+  echo -e "\e[33mDownload the dependencies & build the software \e[0m"
+  go mod init ${component} &>>${log_file}
+  go get &>>${log_file}
+  go build &>>${log_file}
+  
+  echo -e "\e[33mSetup ${component} service \e[0m"
+  cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
+  
+  service_start
+}

@@ -12,7 +12,6 @@ stat_check() {
   else
      echo FAILURE
    fi
-
 }
 
 app_prereq() {

@@ -33,8 +33,13 @@ app_prereq() {
     unzip /tmp/${component}.zip &>>${log_file}
     stat_check $?
 }
-
+# shellcheck disable=SC2120
 service_start(){
+    func_print_head "Setup SystemD Service"
+    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service
+    sed -i "s|roboshop_app_pwd|${roboshop_app_pwd}|" /etc/systemd/system/${component}.service
+    stat_check $?
+
     func_print_head "Load the service"
     systemctl daemon-reload &>>${log_file}
     stat_check $?
@@ -59,11 +64,6 @@ func_nodejs() {
     func_print_head "Download the dependencies"
     npm install &>>${log_file}
     stat_check $?
-
-    func_print_head "Setup SystemD Catalogue Service"
-    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service
-    stat_check $?
-
     service_start
 }
 
@@ -97,8 +97,6 @@ maven() {
     mvn clean package &>>${log_file}
     mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
 
-    func_print_head "Setup a Shipping service"
-    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
     service_start
     mysql_schema_setup
 }
@@ -111,26 +109,18 @@ python() {
     
     func_print_head "Download dependencies"
     pip3.6 install -r requirements.txt &>>${log_file}
-    
-    func_print_head "Setup ${component} service"
-    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
-    
     service_start
 }
 
 golang() {
-  echo -e "\e[33mInstall GoLang \e[0m"
+  func_print_head "Install GoLang"
   yum install golang -y &>>${log_file}
   
   app_prereq
   
-  echo -e "\e[33mDownload the dependencies & build the software \e[0m"
+  func_print_head "Download the dependencies & build the software"
   go mod init ${component} &>>${log_file}
   go get &>>${log_file}
   go build &>>${log_file}
-  
-  echo -e "\e[33mSetup ${component} service \e[0m"
-  cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
-  
   service_start
 }

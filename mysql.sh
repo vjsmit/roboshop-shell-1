@@ -1,5 +1,5 @@
 source common.sh
-
+mysql_pwd=$1
 
 func_print_head "Disable MySQL 8"
 yum module disable mysql -y &>>${log_file}
@@ -16,5 +16,5 @@ systemctl enable mysqld &>>${log_file}
 systemctl restart mysqld &>>${log_file}
 
 func_print_head "Change the default root password "
-mysql_secure_installation --set-root-pass RoboShop@1 &>>${log_file}
+mysql_secure_installation --set-root-pass ${mysql_pwd} &>>${log_file}
 

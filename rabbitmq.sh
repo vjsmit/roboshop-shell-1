@@ -14,5 +14,5 @@ systemctl enable rabbitmq-server &>>${log_file}
 systemctl restart rabbitmq-server &>>${log_file}
 
 func_print_head "Create one user for the app and set permission\e[0m"
-rabbitmqctl add_user roboshop roboshop123 &>>${log_file} &>>${log_file}
+rabbitmqctl add_user roboshop $1 &>>${log_file} &>>${log_file}
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${log_file}

@@ -2,19 +2,19 @@ source common.sh
 
 
 func_print_head "Disable MySQL 8"
-yum module disable mysql -y &>>/tmp/roboshop.log
+yum module disable mysql -y &>>${log_file}
 
 func_print_head "Setup the MySQL5.7 repo file"
-cp /home/centos/roboshop-shell-1/mysql.repo /etc/yum.repos.d/mysql.repo &>>/tmp/roboshop.log
+cp /home/centos/roboshop-shell-1/mysql.repo /etc/yum.repos.d/mysql.repo &>>${log_file}
 
 func_print_head "Install MySQL Server"
-yum install mysql-community-server -y &>>/tmp/roboshop.log
+yum install mysql-community-server -y &>>${log_file}
 
 
 func_print_head "Start MySQL Service"
-systemctl enable mysqld &>>/tmp/roboshop.log
-systemctl restart mysqld &>>/tmp/roboshop.log
+systemctl enable mysqld &>>${log_file}
+systemctl restart mysqld &>>${log_file}
 
 func_print_head "Change the default root password "
-mysql_secure_installation --set-root-pass RoboShop@1 &>>/tmp/roboshop.log
+mysql_secure_installation --set-root-pass RoboShop@1 &>>${log_file}
 

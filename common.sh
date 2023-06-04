@@ -1,4 +1,4 @@
-log_file="${log_file}"
+log_file="/tmp/roboshop.log"
 
 func_print_head() {
   echo -e "\e[33m$1\e[0m"

@@ -1,11 +1,10 @@
-
 log_file="${log_file}"
 
 func_print_head() {
   echo -e "\e[33m$1\e[0m"
 }
 
-app_prereq(){
+app_prereq() {
     func_print_head "Add application User"
     useradd roboshop &>>${log_file}
 

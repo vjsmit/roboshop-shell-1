@@ -2,7 +2,7 @@
 Description=Payment Service
 
 [Service]
-User=roboshop
+User=root
 WorkingDirectory=/app
 Environment=CART_HOST=cart-dev.smitdevops.online
 Environment=CART_PORT=8080

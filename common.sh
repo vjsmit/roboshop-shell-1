@@ -9,7 +9,11 @@ func_print_head() {
 
 app_prereq() {
     func_print_head "Add application User"
-    useradd roboshop &>>${log_file}
+    id roboshop &>>${log_file}
+    if [ $? -ne 0 ]; then
+        useradd roboshop &>>${log_file}
+    fi
+    
     if [ $? -eq 0 ]; then
       echo SUCCESS
     else

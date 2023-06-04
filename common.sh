@@ -88,7 +88,7 @@ python() {
     
     app_prereq
     
-    func_print_head "Download the dependencies"
+    func_print_head "Download dependencies"
     pip3.6 install -r requirements.txt &>>${log_file}
     
     func_print_head "Setup ${component} service"

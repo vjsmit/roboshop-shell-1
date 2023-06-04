@@ -10,49 +10,85 @@ func_print_head() {
 app_prereq() {
     func_print_head "Add application User"
     useradd roboshop &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+      echo Success
+    else
+      echo FAILURE
+    fi
 
     func_print_head "Setup an app directory"
     rm -rf ${app_path}
     mkdir ${app_path} &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+        echo Success
+    else
+        echo FAILURE
+    fi
 
     func_print_head "Download the application code"
     curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${log_file}
     cd ${app_path}
     unzip /tmp/${component}.zip &>>${log_file}
-    echo $?
+     if [$? eq 0]; then
+        echo Success
+    else
+        echo FAILURE
+     fi
 }
 
 service_start(){
     func_print_head "Load the service"
     systemctl daemon-reload &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+            echo Success
+    else
+            echo FAILURE
+    fi
 
     func_print_head "Start the service"
     systemctl enable ${component} &>>${log_file}
     systemctl restart ${component} &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+            echo Success
+    else
+            echo FAILURE
+    fi
 }
 
 func_nodejs() {
     func_print_head "Setup NodeJS repo"
     curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+            echo Success
+    else
+            echo FAILURE
+    fi
 
     func_print_head "Install NodeJS"
     yum install nodejs -y &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+       echo Success
+    else
+       echo FAILURE
+    fi
 
     app_prereq
 
     func_print_head "Download the dependencies"
     npm install &>>${log_file}
-    echo $?
+    if [$? eq 0]; then
+            echo Success
+    else
+            echo FAILURE
+    fi
 
     func_print_head "Setup SystemD Catalogue Service"
     cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service
-    echo $?
+    if [$? eq 0]; then
+            echo Success
+    else
+            echo FAILURE
+    fi
 
     service_start
 }

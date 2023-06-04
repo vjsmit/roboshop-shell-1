@@ -27,10 +27,12 @@ app_prereq() {
 service_start(){
     func_print_head "Load the service"
     systemctl daemon-reload &>>${log_file}
+    echo $?
 
     func_print_head "Start the service"
     systemctl enable ${component} &>>${log_file}
     systemctl restart ${component} &>>${log_file}
+    echo $?
 }
 
 func_nodejs() {

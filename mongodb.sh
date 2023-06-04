@@ -1,3 +1,4 @@
+source coomon.sh
 func_print_head "Copy mongodb repo file"
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 

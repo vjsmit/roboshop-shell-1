@@ -81,16 +81,16 @@ maven() {
 }
 
 python() {
-    echo -e "\e[33mInstall Python 3.6\e[0m"
-    yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
+    func_print_head "Install Python 3.6"
+    yum install python36 gcc python3-devel -y &>>${log_file}
     
     app_prereq
     
-    echo -e "\e[33mDownload the dependencies\e[0m"
-    pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
+    func_print_head "Download the dependencies"
+    pip3.6 install -r requirements.txt &>>${log_file}
     
-    echo -e "\e[33mSetup ${component} service\e[0m"
-    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>/tmp/roboshop.log
+    func_print_head "Setup ${component} service"
+    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
     
     service_start
 }

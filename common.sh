@@ -1,6 +1,11 @@
 log_file="/tmp/roboshop.log"
 app_path="/app"
 rm -rf ${log_file}
+user_id=$(id -u)
+if [ ${user_id} -ne 0 ]; then
+    echo Script should run as sudo user
+    exit 1
+fi
 
 func_print_head() {
   echo -e "\e[32m$1\e[0m"
@@ -11,6 +16,7 @@ stat_check() {
      echo SUCCESS
   else
      echo FAILURE
+     exit 1
    fi
 }
 
@@ -83,7 +89,7 @@ mysql_schema_setup() {
     yum install mysql -y &>>${log_file}
 
     func_print_head "Load Schema"
-    mysql -h mysql-dev.smitdevops.online -uroot -pRoboShop@1 < ${app_path}/schema/${component}.sql &>>${log_file}
+    mysql -h mysql-dev.smitdevops.online -uroot -p${mysql_pwd} < ${app_path}/schema/${component}.sql &>>${log_file}
 
     func_print_head "Restart ${component} service"
     systemctl restart ${component} &>>${log_file}

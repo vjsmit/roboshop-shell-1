@@ -18,7 +18,7 @@ app_prereq() {
     unzip /tmp/${component}.zip &>>${log_file}
 }
 
-service_setup(){
+service_start(){
     func_print_head "Load the service"
     systemctl daemon-reload &>>${log_file}
 
@@ -41,7 +41,7 @@ func_nodejs() {
     func_print_head "Setup SystemD Catalogue Service"
     cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service
 
-    service_setup
+    service_start
 }
 
 mongo_schema_setup() {
@@ -76,6 +76,21 @@ maven() {
 
     func_print_head "Setup a Shipping service"
     cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
-    service_setup
+    service_start
     mysql_schema_setup
+}
+
+python() {
+    echo -e "\e[33mInstall Python 3.6\e[0m"
+    yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
+    
+    app_prereq
+    
+    echo -e "\e[33mDownload the dependencies\e[0m"
+    pip3.6 install -r requirements.txt &>>/tmp/roboshop.log
+    
+    echo -e "\e[33mSetup ${component} service\e[0m"
+    cp /home/centos/roboshop-shell-1/${component}.service /etc/systemd/system/${component}.service &>>/tmp/roboshop.log
+    
+    service_start
 }

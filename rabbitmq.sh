@@ -1,4 +1,5 @@
 source common.sh
+roboshop_app_pwd=$1
 
 func_print_head "Configure YUM Repos for erlang"
 curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>${log_file}
@@ -18,6 +19,6 @@ systemctl restart rabbitmq-server &>>${log_file}
 stat_check $?
 
 func_print_head "Create one user for the app and set permission\e[0m"
-rabbitmqctl add_user roboshop $1 &>>${log_file} &>>${log_file}
+rabbitmqctl add_user roboshop ${roboshop_app_pwd} &>>${log_file} &>>${log_file}
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${log_file}
 stat_check $?

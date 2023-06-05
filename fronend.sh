@@ -12,12 +12,12 @@ func_print_head "Download the frontend content"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${log_file}
 stat_check $?
 
-func_print_head "Extract the frontend content."
+func_print_head "Extract the frontend content"
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>${log_file}
 stat_check $?
 
-#Create Nginx Reverse Proxy Configuration.
+func_print_head "Create Nginx Reverse Proxy Configuration"
 cp /home/centos/roboshop-shell-1/roboshop.conf /etc/nginx/default.d/roboshop.conf
 stat_check $?
 

@@ -76,32 +76,40 @@ func_nodejs() {
 mongo_schema_setup() {
   func_print_head "Setup MongoDB repo"
   cp /home/centos/roboshop-shell-1/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+  stat_check $?
 
   func_print_head "Install mongoDB client"
   yum install mongodb-org-shell -y &>>${log_file}
+  stat_check $?
 
   func_print_head "Load Schema"
   mongo --host mongodb-dev.smitdevops.online <${app_path}/schema/${component}.js &>>${log_file}
+  stat_check $?
 }
 
 mysql_schema_setup() {
     func_print_head "Install mysql client"
     yum install mysql -y &>>${log_file}
+    stat_check $?
 
     func_print_head "Load Schema"
     mysql -h mysql-dev.smitdevops.online -uroot -p${mysql_pwd} < ${app_path}/schema/${component}.sql &>>${log_file}
+    stat_check $?
 
     func_print_head "Restart ${component} service"
     systemctl restart ${component} &>>${log_file}
+    stat_check $?
 }
 maven() {
     func_print_head "Installing Maven"
     yum install maven -y &>>${log_file}
+    stat_check $?
 
     app_prereq
     func_print_head "Download the dependencies & build the application"
     mvn clean package &>>${log_file}
     mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
+    stat_check $?
 
     service_start
     mysql_schema_setup
@@ -110,17 +118,20 @@ maven() {
 python() {
     func_print_head "Install Python 3.6"
     yum install python36 gcc python3-devel -y &>>${log_file}
+    stat_check $?
     
     app_prereq
     
     func_print_head "Download dependencies"
     pip3.6 install -r requirements.txt &>>${log_file}
     service_start
+    stat_check $?
 }
 
 golang() {
   func_print_head "Install GoLang"
   yum install golang -y &>>${log_file}
+  stat_check $?
   
   app_prereq
   
@@ -128,5 +139,6 @@ golang() {
   go mod init ${component} &>>${log_file}
   go get &>>${log_file}
   go build &>>${log_file}
+  stat_check $?
   service_start
 }

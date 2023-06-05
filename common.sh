@@ -125,7 +125,6 @@ python() {
     func_print_head "Download dependencies"
     pip3.6 install -r requirements.txt &>>${log_file}
     service_start
-    stat_check $?
 }
 
 golang() {

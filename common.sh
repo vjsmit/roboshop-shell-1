@@ -95,10 +95,6 @@ mysql_schema_setup() {
     func_print_head "Load Schema"
     mysql -h mysql-dev.smitdevops.online -uroot -p${mysql_pwd} < ${app_path}/schema/${component}.sql &>>${log_file}
     stat_check $?
-
-    func_print_head "Restart ${component} service"
-    systemctl restart ${component} &>>${log_file}
-    stat_check $?
 }
 maven() {
     func_print_head "Installing Maven"
@@ -111,8 +107,9 @@ maven() {
     mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
     stat_check $?
 
-    service_start
     mysql_schema_setup
+    service_start
+
 }
 
 python() {
